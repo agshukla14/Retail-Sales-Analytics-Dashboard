@@ -1,46 +1,51 @@
 # 📊 Retail Sales Analytics Dashboard
 
-An interactive **Retail Sales Analytics Dashboard** built to analyze sales performance, customer behavior, product categories, and regional trends.
+An interactive web-based dashboard for analyzing retail sales performance across products, regions, customers, demographics, pricing, and order trends.
 
-The project transforms a retail sales dataset into an interactive Business Intelligence-style dashboard using **HTML, CSS, and Vanilla JavaScript**.
+Built as a Data Analytics portfolio project using **HTML, CSS, JavaScript, and data-driven visualizations**.
 
 ---
 
 ## 🚀 Live Dashboard
 
-👉 [View Interactive Dashboard](https://agshukla14.github.io/Retail-Sales-Dashboard-Excel/)
+👉 **[View Interactive Dashboard](https://agshukla14.github.io/Retail-Sales-Analytics-Dashboard/)**
+
 ---
 
 ## 📌 Project Overview
 
-This dashboard provides an interactive way to explore retail sales data and answer important business questions such as:
+This project transforms a retail sales dataset of **500 orders** into an interactive Business Intelligence-style dashboard.
 
-- What is the total revenue generated?
-- How many orders were placed?
-- Which product category generates the most revenue?
-- Which region performs best?
-- How does revenue change over time?
-- Which customer demographics contribute the most revenue?
-- What is the relationship between price and quantity?
-- Which orders generate the highest revenue?
+The dashboard enables users to explore:
+
+- Revenue performance
+- Sales trends over time
+- Product category performance
+- Regional performance
+- Customer demographics
+- Pricing and quantity relationships
+- Top-performing transactions
+- Dynamic business insights
+
+Users can interact with the dashboard using multiple filters and instantly analyze the resulting metrics and visualizations.
 
 ---
 
-## 📂 Dataset
+## 📊 Dataset
 
-The dataset contains **500 retail orders** with the following attributes:
+The dataset contains **500 retail transactions** with the following attributes:
 
 | Column | Description |
 |---|---|
-| Order_ID | Unique order identifier |
-| Order_Date | Date of the order |
-| Customer_ID | Customer identifier |
-| Gender | Customer gender |
-| Age | Customer age |
-| Region | Customer/order region |
-| Product_Category | Product category |
-| Price | Unit price |
-| Quantity | Quantity purchased |
+| `Order_ID` | Unique order identifier |
+| `Order_Date` | Date of the transaction |
+| `Customer_ID` | Customer identifier |
+| `Gender` | Customer gender |
+| `Age` | Customer age |
+| `Region` | Sales region |
+| `Product_Category` | Product category |
+| `Price` | Selling price per unit |
+| `Quantity` | Quantity purchased |
 
 ### Derived Metric
 
@@ -48,129 +53,90 @@ The dataset contains **500 retail orders** with the following attributes:
 
 ---
 
-## 📊 Dashboard Features
+## 📈 Dashboard Features
 
-### KPI Cards
+### KPI Overview
 
-- Total Revenue
-- Total Orders
-- Total Quantity Sold
-- Average Order Value
-- Average Selling Price
-- Unique Customers
-- Revenue per Customer
-- Orders per Customer
-- Average Quantity per Order
+The dashboard provides key performance indicators including:
 
-### 🔎 Interactive Filters
+- 💰 Total Revenue
+- 🧾 Total Orders
+- 📦 Total Quantity Sold
+- 💵 Average Order Value
+- 🏷️ Average Selling Price
+- 👥 Unique Customers
 
-- Order Date
-- Region
-- Product Category
-- Gender
-- Age Bracket
+Additional customer and pricing metrics are also available.
 
-The dashboard also includes a **Reset Filters** option.
+### Interactive Filters
 
-### 📈 Sales Trend Analysis
+Users can dynamically filter the dashboard by:
 
-Interactive analysis with:
+- 📅 Date Range
+- 🌎 Region
+- 🛍️ Product Category
+- 👤 Gender
+- 🎂 Age Bracket
 
-- Daily
-- Monthly
-- Quarterly
+All dashboard metrics and visualizations update based on the selected filters.
 
-Metrics:
+### Visual Analysis
 
-- Revenue
-- Quantity
-- Orders
+The dashboard includes:
 
-### 🛍️ Product Category Analysis
+- 📈 Sales Trend Analysis
+- 🛍️ Product Category Analysis
+- 🌎 Regional Performance
+- 👥 Gender Distribution
+- 🎂 Age Group Analysis
+- 💰 Price vs Quantity Analysis
+- 🏆 Top Performers
+- 📋 Transaction-Level Data
+- 💡 Dynamic Key Insights
 
-Analyze category performance using:
+---
 
-- Revenue
-- Quantity
-- Category-level summaries
+## 🔍 Key Analytical Questions
 
-### 🌎 Regional Analysis
+The dashboard is designed to answer questions such as:
 
-Analyze:
-
-- Revenue by Region
-- Orders by Region
-- Regional performance
-- Average Order Value
-
-### 👥 Customer Demographics
-
-Analyze customer behavior by:
-
-**Gender**
-- Revenue
-- Orders
-- Quantity
-
-**Age Brackets**
-- Under 18
-- 18–25
-- 26–35
-- 36–45
-- 46–55
-- 56+
-
-### 📦 Price vs Quantity Analysis
-
-Interactive scatter plot analyzing the relationship between:
-
-**Price ↔ Quantity**
-
-The visualization provides transaction-level information on hover.
-
-### 🏆 Top Performers
-
-The dashboard identifies:
-
-- Top product categories by revenue
-- Top regions by revenue
-- Highest-value orders
-
-The transaction table is sortable and responds to applied filters.
-
-### 💡 Dynamic Business Insights
-
-The dashboard automatically generates business insights based on the currently selected filters.
+1. What is the overall revenue generated?
+2. How does revenue change over time?
+3. Which product categories generate the most revenue?
+4. Which regions contribute the most sales?
+5. How does purchasing behavior differ across customer demographics?
+6. What is the relationship between product price and quantity sold?
+7. Which transactions contribute the most revenue?
+8. How do the KPIs change when different customer or product filters are applied?
 
 ---
 
 ## 🛠️ Technologies Used
 
-- HTML5
-- CSS3
-- JavaScript
-- SVG
-- Python
-- Git
-- GitHub
+- **HTML5** — Dashboard structure
+- **CSS3** — Responsive styling and UI
+- **JavaScript** — Data processing and dashboard interactions
+- **SVG** — Data visualizations
+- **CSV** — Source dataset
+- **Git & GitHub** — Version control
+- **GitHub Pages** — Dashboard deployment
 
 ---
 
 ## 📁 Project Structure
 
 ```text
-retail-sales-analytics-dashboard/
+Retail-Sales-Analytics-Dashboard/
 │
-├── index.html
-├── styles.css
-├── app.js
-├── data.js
-├── retail_sales.csv
+├── index.html              # Dashboard interface
+├── styles.css              # Dashboard styling
+├── app.js                  # Dashboard logic and interactions
+├── data.js                 # Processed dataset
+├── retail_sales.csv        # Original dataset
 │
-├── build_standalone.py
-├── export_json.py
-├── validate_data.py
-├── test_dashboard.js
+├── export_json.py          # Data export utility
+├── build_standalone.py     # Standalone build utility
+├── validate_data.py        # Dataset validation
+├── test_dashboard.js       # Dashboard testing
 │
-├── README.md
-└── .gitignore
+└── README.md               # Project documentation
