@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Retail Sales Analytics Dashboard</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <div class="dashboard-container">
+
+    <!-- ==================== HEADER ==================== -->
+    <header class="header-card">
+      <div class="header-left">
+        <div class="header-icon">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="20" x2="18" y2="10"></line>
+            <line x1="12" y1="20" x2="12" y2="4"></line>
+            <line x1="6" y1="20" x2="6" y2="14"></line>
+          </svg>
+        </div>
+        <div>
+          <h1 class="header-title">Retail Sales Analytics Dashboard</h1>
+          <p class="header-subtitle">Interactive analysis of sales, customers, products, and regional performance</p>
+        </div>
+      </div>
+
+      <div class="header-badges">
+        <span class="badge badge-source">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 22h16a2 2 0 002-2V4a2 2 0 00-2-2H4a2 2 0 00-2 2v16a2 2 0 002 2z"/></svg>
+          Data Source: Retail Sales Dataset | 500 Orders
+        </span>
+        <span class="badge badge-status" id="validation-badge">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+          Validated: 500 Orders (0 Nulls, 0 Dups)
+        </span>
+      </div>
+
+      <div class="header-actions">
+        <button class="btn btn-outline" id="btn-export-csv" title="Export current filtered view to CSV">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+          Export CSV
+        </button>
+        <button class="btn btn-primary" id="btn-reset-filters" title="Reset all filters to default full dataset">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 109-9 9.75 9.75 0 00-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+          Reset Filters
+        </button>
+      </div>
+    </header>
+
+    <!-- ==================== GLOBAL FILTERS ==================== -->
+    <section class="filter-panel" aria-label="Global Dashboard Filters">
+      <div class="filter-header">
+        <div class="filter-title">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+          Global Interactive Slicers &amp; Filters
+        </div>
+        <div class="filter-match-count" id="filter-match-count">500 of 500 Orders (100%)</div>
+      </div>
+
+      <div class="filter-grid">
+        <!-- Date Range Filter -->
+        <div class="filter-group">
+          <span class="filter-label">Order Date Range</span>
+          <div class="date-controls">
+            <div class="date-inputs">
+              <input type="date" id="filter-date-start" class="date-input" value="2023-01-01" min="2023-01-01" max="2023-12-31">
+              <span class="date-separator">to</span>
+              <input type="date" id="filter-date-end" class="date-input" value="2023-12-31" min="2023-01-01" max="2023-12-31">
+            </div>
+            <div class="filter-chips">
+              <span class="chip active" data-date-preset="all">All 2023</span>
+              <span class="chip" data-date-preset="q1">Q1</span>
+              <span class="chip" data-date-preset="q2">Q2</span>
+              <span class="chip" data-date-preset="q3">Q3</span>
+              <span class="chip" data-date-preset="q4">Q4</span>
+              <span class="chip" data-date-preset="last30">Last 30D</span>
+              <span class="chip" data-date-preset="last90">Last 90D</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Region Filter -->
+        <div class="filter-group">
+          <span class="filter-label">Region</span>
+          <div class="filter-chips">
+            <span class="chip" data-filter="region" data-value="West">West</span>
+            <span class="chip" data-filter="region" data-value="East">East</span>
+            <span class="chip" data-filter="region" data-value="North">North</span>
+            <span class="chip" data-filter="region" data-value="South">South</span>
+          </div>
+        </div>
+
+        <!-- Product Category Filter -->
+        <div class="filter-group">
+          <span class="filter-label">Product Category</span>
+          <div class="filter-chips">
+            <span class="chip" data-filter="category" data-value="Electronics">Electronics</span>
+            <span class="chip" data-filter="category" data-value="Home">Home</span>
+            <span class="chip" data-filter="category" data-value="Sports">Sports</span>
+            <span class="chip" data-filter="category" data-value="Clothing">Clothing</span>
+          </div>
+        </div>
+
+        <!-- Gender Filter -->
+        <div class="filter-group">
+          <span class="filter-label">Gender</span>
+          <div class="filter-chips">
+            <span class="chip" data-filter="gender" data-value="Male">Male</span>
+            <span class="chip" data-filter="gender" data-value="Female">Female</span>
+          </div>
+        </div>
+
+        <!-- Age Group Filter -->
+        <div class="filter-group">
+          <span class="filter-label">Age Bracket</span>
+          <div class="filter-chips">
+            <span class="chip" data-filter="age" data-value="Under 18">Under 18</span>
+            <span class="chip" data-filter="age" data-value="18-25">18–25</span>
+            <span class="chip" data-filter="age" data-value="26-35">26–35</span>
+            <span class="chip" data-filter="age" data-value="36-45">36–45</span>
+            <span class="chip" data-filter="age" data-value="46-55">46–55</span>
+            <span class="chip" data-filter="age" data-value="56+">56+</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Active Filter Pills Summary -->
+      <div class="active-filters-summary" id="active-filters-summary">
+        <span style="color: var(--text-muted); font-style: italic;">No active slice filters (showing entire dataset). Click any chart element or filter pill to slice.</span>
+      </div>
+    </section>
+
+    <!-- ==================== KPI HERO CARDS ==================== -->
+    <section class="kpi-grid" aria-label="Key Performance Indicators">
+      <!-- 1. Total Revenue -->
+      <div class="kpi-card" style="--kpi-accent: #4f46e5; --kpi-bg: #eef2ff;">
+        <div class="kpi-top">
+          <span class="kpi-title">Total Revenue</span>
+          <div class="kpi-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+          </div>
+        </div>
+        <div class="kpi-value" id="kpi-revenue">$827,588.10</div>
+        <div class="kpi-footer">
+          <span id="kpi-revenue-share">100.0% of total dataset</span>
+          <span class="kpi-badge">SUM(Price × Qty)</span>
+        </div>
+      </div>
+
+      <!-- 2. Total Orders -->
+      <div class="kpi-card" style="--kpi-accent: #0284c7; --kpi-bg: #f0f9ff;">
+        <div class="kpi-top">
+          <span class="kpi-title">Total Orders</span>
+          <div class="kpi-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+          </div>
+        </div>
+        <div class="kpi-value" id="kpi-orders">500</div>
+        <div class="kpi-footer">
+          <span id="kpi-orders-share">100.0% of total volume</span>
+          <span class="kpi-badge">COUNT(Order_ID)</span>
+        </div>
+      </div>
+
+      <!-- 3. Total Quantity Sold -->
+      <div class="kpi-card" style="--kpi-accent: #10b981; --kpi-bg: #ecfdf5;">
+        <div class="kpi-top">
+          <span class="kpi-title">Total Quantity Sold</span>
+          <div class="kpi-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg>
+          </div>
+        </div>
+        <div class="kpi-value" id="kpi-quantity">1,527</div>
+        <div class="kpi-footer">
+          <span id="kpi-qty-share">100.0% of units</span>
+          <span class="kpi-badge">SUM(Quantity)</span>
+        </div>
+      </div>
+
+      <!-- 4. Average Order Value -->
+      <div class="kpi-card" style="--kpi-accent: #f59e0b; --kpi-bg: #fffbeb;">
+        <div class="kpi-top">
+          <span class="kpi-title">Average Order Value</span>
+          <div class="kpi-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+          </div>
+        </div>
+        <div class="kpi-value" id="kpi-aov">$1,655.18</div>
+        <div class="kpi-footer">
+          <span>Revenue / Orders</span>
+          <span class="kpi-badge">AOV Metric</span>
+        </div>
+      </div>
+
+      <!-- 5. Average Selling Price -->
+      <div class="kpi-card" style="--kpi-accent: #8b5cf6; --kpi-bg: #f5f3ff;">
+        <div class="kpi-top">
+          <span class="kpi-title">Average Selling Price</span>
+          <div class="kpi-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><tag/><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+          </div>
+        </div>
+        <div class="kpi-value" id="kpi-asp">$531.77</div>
+        <div class="kpi-footer">
+          <span>AVERAGE(Price)</span>
+          <span class="kpi-badge">ASP Benchmark</span>
+        </div>
+      </div>
+
+      <!-- 6. Unique Customers -->
+      <div class="kpi-card" style="--kpi-accent: #ec4899; --kpi-bg: #fdf2f8;">
+        <div class="kpi-top">
+          <span class="kpi-title">Unique Customers</span>
+          <div class="kpi-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+          </div>
+        </div>
+        <div class="kpi-value" id="kpi-customers">99</div>
+        <div class="kpi-footer">
+          <span>COUNT(DISTINCT Cust_ID)</span>
+          <span class="kpi-badge">5.05 Orders/Cust</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Secondary KPI Quick Drawer -->
+    <div class="secondary-kpi-bar">
+      <div class="sec-kpi-item">
+        <span class="sec-kpi-label">Revenue / Customer:</span>
+        <span class="sec-kpi-value" id="sec-kpi-rev-cust">$8,359.48</span>
+      </div>
+      <div class="sec-kpi-item">
+        <span class="sec-kpi-label">Orders / Customer:</span>
+        <span class="sec-kpi-value" id="sec-kpi-orders-cust">5.05</span>
+      </div>
+      <div class="sec-kpi-item">
+        <span class="sec-kpi-label">Avg Quantity / Order:</span>
+        <span class="sec-kpi-value" id="sec-kpi-qty-ord">3.05</span>
+      </div>
+      <div class="sec-kpi-item">
+        <span class="sec-kpi-label">Price Range:</span>
+        <span class="sec-kpi-value" style="font-size:0.9rem;">$25.26 &ndash; $1,982.01</span>
+      </div>
+    </div>
+
+    <!-- Empty State Warning if filter produces 0 rows -->
+    <div class="empty-state" id="empty-state-card">
+      <div class="empty-state-icon">🔍</div>
+      <h3 class="empty-state-title">No Orders Match the Selected Filters</h3>
+      <p class="empty-state-desc">The combination of filters currently applied returned 0 records. Adjust the filters or click the button below to reset.</p>
+      <button class="btn btn-primary" id="btn-empty-reset">Reset All Filters</button>
+    </div>
+
+    <!-- ==================== MAIN CHARTS GRID ==================== -->
+    <div id="dashboard-main-grid" style="display: flex; flex-direction: column; gap: 24px;">
+
+      <!-- 1. SALES TREND ANALYSIS (Full Width) -->
+      <section class="card" aria-label="Sales Trend Analysis">
+        <div class="card-header">
+          <div class="card-title-group">
+            <h2 class="card-title">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+              Sales Trend Analysis Over Time
+            </h2>
+            <p class="card-subtitle">Interactive trajectory of sales performance across 2023 with custom time aggregation</p>
+          </div>
+
+          <div class="card-controls">
+            <!-- Aggregation Switcher -->
+            <div class="btn-toggle-group" aria-label="Time Aggregation">
+              <button class="btn-toggle" data-trend-interval="daily">Daily</button>
+              <button class="btn-toggle active" data-trend-interval="monthly">Monthly</button>
+              <button class="btn-toggle" data-trend-interval="quarterly">Quarterly</button>
+            </div>
+
+            <!-- Metric Switcher -->
+            <div class="btn-toggle-group" aria-label="Trend Metric">
+              <button class="btn-toggle active" data-trend-metric="revenue">Revenue ($)</button>
+              <button class="btn-toggle" data-trend-metric="quantity">Quantity</button>
+              <button class="btn-toggle" data-trend-metric="orders">Orders</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="chart-container" id="trend-chart-container" style="height: 300px;">
+          <!-- SVG Trend chart rendered via app.js -->
+        </div>
+      </section>
+
+      <!-- 2. PRODUCT CATEGORY & REGIONAL ANALYSIS (2 Columns) -->
+      <div class="grid-2col">
+        <!-- Category Analysis -->
+        <section class="card" aria-label="Product Category Analysis">
+          <div class="card-header">
+            <div class="card-title-group">
+              <h2 class="card-title">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg>
+                Product Category Performance
+              </h2>
+              <p class="card-subtitle">Sorted by contribution &bull; Click any category bar to slice the dashboard</p>
+            </div>
+            <div class="card-controls">
+              <div class="btn-toggle-group">
+                <button class="btn-toggle active" data-cat-metric="revenue">Revenue</button>
+                <button class="btn-toggle" data-cat-metric="quantity">Quantity</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="chart-container" id="category-chart-container" style="height: 240px;">
+            <!-- Category SVG Bar Chart -->
+          </div>
+
+          <!-- Category KPI breakdown -->
+          <div class="category-summary-list" id="category-summary-list">
+            <!-- Rendered by JS -->
+          </div>
+        </section>
+
+        <!-- Regional Performance -->
+        <section class="card" aria-label="Regional Analysis">
+          <div class="card-header">
+            <div class="card-title-group">
+              <h2 class="card-title">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/></svg>
+                Regional Performance &amp; Value
+              </h2>
+              <p class="card-subtitle">Revenue, orders, and basket value across regional territories &bull; Click to cross-filter</p>
+            </div>
+          </div>
+
+          <div class="chart-container" id="regional-chart-container" style="height: 240px;">
+            <!-- Regional SVG Chart -->
+          </div>
+
+          <!-- Regional Detail Table -->
+          <div id="regional-table-container">
+            <!-- Rendered by JS -->
+          </div>
+        </section>
+      </div>
+
+      <!-- 3. CUSTOMER DEMOGRAPHICS (Gender Donut + Age Group Distribution) -->
+      <div class="grid-2col">
+        <!-- Gender Purchasing Behavior -->
+        <section class="card" aria-label="Gender Analysis">
+          <div class="card-header">
+            <div class="card-title-group">
+              <h2 class="card-title">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+                Gender Purchasing Behavior
+              </h2>
+              <p class="card-subtitle">Contribution share by gender demographic &bull; Click to filter</p>
+            </div>
+            <div class="card-controls">
+              <div class="btn-toggle-group">
+                <button class="btn-toggle active" data-gender-metric="revenue">Revenue</button>
+                <button class="btn-toggle" data-gender-metric="orders">Orders</button>
+                <button class="btn-toggle" data-gender-metric="quantity">Quantity</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="chart-container" id="gender-chart-container" style="display: flex; align-items: center; justify-content: center; min-height: 240px;">
+            <!-- SVG Donut Chart -->
+          </div>
+        </section>
+
+        <!-- Age Group Analysis -->
+        <section class="card" aria-label="Age Group Analysis">
+          <div class="card-header">
+            <div class="card-title-group">
+              <h2 class="card-title">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                Revenue &amp; Orders by Age Bracket
+              </h2>
+              <p class="card-subtitle">Spending patterns across defined age cohorts &bull; Click bar to cross-filter</p>
+            </div>
+          </div>
+
+          <div class="chart-container" id="age-chart-container" style="height: 240px;">
+            <!-- Age SVG Bar Chart -->
+          </div>
+        </section>
+      </div>
+
+      <!-- 4. PRICE & QUANTITY SCATTER PLOT (Full Width) -->
+      <section class="card" aria-label="Price and Quantity Analysis">
+        <div class="card-header">
+          <div class="card-title-group">
+            <h2 class="card-title">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="7.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="18.5" cy="5.5" r=".5" fill="currentColor"/><circle cx="11.5" cy="11.5" r=".5" fill="currentColor"/><circle cx="7.5" cy="16.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="14.5" r=".5" fill="currentColor"/></svg>
+              Price vs. Quantity Order Distribution
+            </h2>
+            <p class="card-subtitle">Examine unit price vs quantity sensitivity across orders &bull; Colored by product category &bull; Hover points for full transaction details</p>
+          </div>
+          <div id="scatter-legend-container">
+            <!-- Scatter legend and category filter pills -->
+          </div>
+        </div>
+
+        <div class="chart-container" id="scatter-chart-container" style="height: 340px;">
+          <!-- SVG Scatter plot -->
+        </div>
+      </section>
+
+      <!-- 5. TOP PERFORMERS & TOP ORDERS TABLE -->
+      <section class="card" aria-label="Top Performers and Orders">
+        <div class="card-header">
+          <div class="card-title-group">
+            <h2 class="card-title">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              Top Performers &amp; Transaction Ledger
+            </h2>
+            <p class="card-subtitle">Highest-value orders and category/regional rankings &bull; Click column headers to sort</p>
+          </div>
+
+          <div class="card-controls">
+            <button class="btn btn-outline" id="btn-toggle-table-limit" style="font-size: 0.8rem; padding: 6px 12px;">
+              View All Filtered Orders
+            </button>
+          </div>
+        </div>
+
+        <!-- Quick Summary Leaderboard Cards -->
+        <div class="grid-2col" style="margin-bottom: 8px;">
+          <div style="background: var(--bg-card-subtle); padding: 14px 18px; border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+            <div style="font-size: 0.8rem; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; margin-bottom: 8px;">
+              Top Product Categories by Revenue
+            </div>
+            <div id="top-categories-ranking">
+              <!-- Rendered by JS -->
+            </div>
+          </div>
+
+          <div style="background: var(--bg-card-subtle); padding: 14px 18px; border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+            <div style="font-size: 0.8rem; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; margin-bottom: 8px;">
+              Top Regions by Revenue
+            </div>
+            <div id="top-regions-ranking">
+              <!-- Rendered by JS -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Sortable Interactive Orders Table -->
+        <div class="table-responsive">
+          <table class="orders-table">
+            <thead>
+              <tr>
+                <th data-sort="Order_ID">Order ID <span class="sort-arrow">⇅</span></th>
+                <th data-sort="Order_Date">Order Date <span class="sort-arrow">⇅</span></th>
+                <th data-sort="Product_Category">Category <span class="sort-arrow">⇅</span></th>
+                <th data-sort="Region">Region <span class="sort-arrow">⇅</span></th>
+                <th data-sort="Price">Price ($) <span class="sort-arrow">⇅</span></th>
+                <th data-sort="Quantity">Quantity <span class="sort-arrow">⇅</span></th>
+                <th data-sort="Revenue" class="sorted">Revenue ($) <span class="sort-arrow">▼</span></th>
+              </tr>
+            </thead>
+            <tbody id="orders-table-tbody">
+              <!-- Rendered by JS -->
+            </tbody>
+          </table>
+          <div class="table-footer">
+            <span id="orders-table-count">Showing 10 of 500 filtered orders</span>
+            <span>Tip: Click any column header to sort ascending or descending</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- 6. DYNAMIC KEY INSIGHTS PANEL (Auto-Generated) -->
+      <section class="insights-panel" aria-label="Key Business Insights">
+        <div class="insights-header">
+          <div class="insights-title">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#4f46e5" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+            Key Business Insights
+          </div>
+          <span class="insights-tag">Automatically Derived from Filtered Slice</span>
+        </div>
+
+        <div class="insights-grid" id="insights-grid">
+          <!-- 8 Dynamic narrative insight cards rendered by JS -->
+        </div>
+      </section>
+
+    </div>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer class="dashboard-footer">
+      <p>Retail Sales Analytics Dashboard &bull; Production BI Portfolio Project &bull; Built with Vanilla JavaScript, SVG &amp; CSS3 &bull; All 500 Records Loaded &amp; Validated</p>
+    </footer>
+
+  </div>
+
+  <!-- Data Script containing the validated 500 records -->
+  <script src="data.js"></script>
+  <!-- Main Application Logic -->
+  <script src="app.js"></script>
+</body>
+</html>
