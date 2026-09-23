@@ -8,8 +8,7 @@ The project transforms a retail sales dataset into an interactive Business Intel
 
 ## 🚀 Live Dashboard
 
-🔗 **Live Demo:** Coming soon
-
+👉 [View Interactive Dashboard](https://agshukla14.github.io/Retail-Sales-Dashboard-Excel/)
 ---
 
 ## 📌 Project Overview
