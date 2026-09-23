@@ -11,6 +11,9 @@ Built as a Data Analytics portfolio project using **HTML, CSS, JavaScript, and d
 👉 **[View Interactive Dashboard](https://agshukla14.github.io/Retail-Sales-Analytics-Dashboard/)**
 
 ---
+### 📸 Dashboard Preview
+
+![Retail Sales Analytics Dashboard](Dashboard-Preview.png)
 
 ## 📌 Project Overview
 
